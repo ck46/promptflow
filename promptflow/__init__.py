@@ -21,13 +21,20 @@ from promptflow.core.types import (
 )
 from promptflow.api import PromptFlow
 
-# Import UI components if streamlit is installed
-try:
-    import streamlit
-    from promptflow.ui import run_streamlit_app
-    HAS_UI = True
-except ImportError:
-    HAS_UI = False
+# Define UI availability flag without importing Streamlit
+HAS_UI = False
+
+# Define a function to get UI components only when needed
+def get_ui_components():
+    """Get UI components if streamlit is installed."""
+    try:
+        from promptflow.ui import run_streamlit_app
+        return {"run_streamlit_app": run_streamlit_app}
+    except ImportError:
+        raise ImportError(
+            "Streamlit is not installed. Install with 'pip install streamlit' "
+            "or 'pip install promptflow[ui]' to use UI components."
+        )
 
 __all__ = [
     # Core classes
@@ -63,8 +70,8 @@ __all__ = [
     
     # High-level API
     "PromptFlow",
-]
-
-# Add UI components if available
-if HAS_UI:
-    __all__.extend(["run_streamlit_app"]) 
+    
+    # UI
+    "HAS_UI",
+    "get_ui_components",
+] 
