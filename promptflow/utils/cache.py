@@ -15,6 +15,40 @@ from promptflow.core.response import LLMResponse
 from promptflow.utils.hashing import hash_prompt
 
 
+def hash_prompt(prompt: Prompt, include_parameters: bool = True) -> str:
+    """
+    Hash a prompt to use as a cache key.
+    
+    Args:
+        prompt: The prompt to hash.
+        include_parameters: Whether to include parameters in the hash.
+        
+    Returns:
+        A hash string.
+    """
+    # Create a representation of the prompt for hashing
+    hash_repr = []
+    
+    # Add messages
+    for msg in prompt.messages:
+        hash_repr.append(f"{msg.role}:{msg.content}")
+        
+    # Add parameters if requested
+    if include_parameters and prompt.parameters:
+        params = prompt.parameters.dict()
+        for key in sorted(params.keys()):
+            hash_repr.append(f"{key}:{params[key]}")
+            
+    # Join and hash
+    import hashlib
+    
+    hash_str = hashlib.sha256(
+        "|".join(hash_repr).encode("utf-8")
+    ).hexdigest()
+    
+    return hash_str
+
+
 class ResponseCache(ABC):
     """
     Abstract base class for response caches.
@@ -174,7 +208,12 @@ class FileCache(ResponseCache):
         try:
             # Load the cache entry
             with open(cache_path, "rb") as f:
-                entry = pickle.load(f)
+                try:
+                    entry = pickle.load(f)
+                except (EOFError, pickle.PickleError) as e:
+                    # If the file is corrupted, remove it and return None
+                    os.remove(cache_path)
+                    return None
                 
             # Check if the entry has expired
             if "expires_at" in entry and entry["expires_at"] < time.time():
@@ -184,7 +223,7 @@ class FileCache(ResponseCache):
                 
             # Return the cached response
             return entry["response"]
-        except (IOError, pickle.PickleError):
+        except (IOError, OSError):
             # If there's an error loading the cache, ignore it
             return None
     
@@ -215,7 +254,7 @@ class FileCache(ResponseCache):
         try:
             with open(cache_path, "wb") as f:
                 pickle.dump(entry, f)
-        except (IOError, pickle.PickleError):
+        except (IOError, OSError, pickle.PickleError):
             # If there's an error saving the cache, ignore it
             pass
     
