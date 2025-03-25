@@ -16,9 +16,9 @@ from promptflow.core.types import PromptCategory, PromptMetadata, PromptParamete
 
 class PromptModel(Model):
     """Database model for storing prompts."""
-    id = fields.IntField(pk=True)
-    name = fields.CharField(max_length=255, index=True)
-    version = fields.CharField(max_length=50, index=True)
+    id = fields.IntField(primary_key=True)
+    name = fields.CharField(max_length=255, db_index=True)
+    version = fields.CharField(max_length=50, db_index=True)
     
     # JSON encoded data
     messages = fields.JSONField()
@@ -27,10 +27,10 @@ class PromptModel(Model):
     stats_json = fields.JSONField(default={})
     
     # Searchable fields extracted from metadata
-    category = fields.CharField(max_length=50, null=True, index=True)
-    is_active = fields.BooleanField(default=False, index=True)
-    is_fallback = fields.BooleanField(default=False, index=True)
-    fallback_for = fields.CharField(max_length=255, null=True, index=True)
+    category = fields.CharField(max_length=50, null=True, db_index=True)
+    is_active = fields.BooleanField(default=False, db_index=True)
+    is_fallback = fields.BooleanField(default=False, db_index=True)
+    fallback_for = fields.CharField(max_length=255, null=True, db_index=True)
     priority = fields.IntField(default=0)
     
     # Timestamps
