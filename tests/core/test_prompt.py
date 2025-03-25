@@ -3,9 +3,11 @@ Tests for the Prompt and PromptBuilder classes.
 """
 
 import json
-from promptflow.core.prompt import Prompt, PromptBuilder
-from promptflow.core.types import MessageRole, Message
+
 import pytest
+
+from promptflow.core.prompt import Prompt, PromptBuilder
+from promptflow.core.types import Message, MessageRole
 
 
 def test_prompt_builder():
@@ -14,10 +16,10 @@ def test_prompt_builder():
     builder = PromptBuilder()
     builder.add_system("You are a helpful assistant.")
     builder.add_user("What is the capital of France?")
-    
+
     # Build the prompt
     prompt = builder.build()
-    
+
     # Check that the prompt has the expected messages
     assert len(prompt.messages) == 2
     assert prompt.messages[0].role == MessageRole.SYSTEM
@@ -30,12 +32,12 @@ def test_prompt_add_messages():
     """Test adding messages to an existing prompt."""
     # Create an empty prompt
     prompt = Prompt(messages=[])
-    
+
     # Add messages
     prompt.add_system("You are a helpful assistant.")
     prompt.add_user("What is the capital of France?")
     prompt.add_assistant("The capital of France is Paris.")
-    
+
     # Check that the prompt has the expected messages
     assert len(prompt.messages) == 3
     assert prompt.messages[0].role == MessageRole.SYSTEM
@@ -53,13 +55,13 @@ def test_prompt_serialization():
     builder.add_system("You are a helpful assistant.")
     builder.add_user("What is the capital of France?")
     prompt = builder.build()
-    
+
     # Serialize the prompt to JSON
     json_str = prompt.to_json()
-    
+
     # Deserialize the prompt from JSON
     prompt2 = Prompt.from_json(json_str)
-    
+
     # Check that the prompts are equivalent
     assert len(prompt.messages) == len(prompt2.messages)
     assert prompt.messages[0].role == prompt2.messages[0].role
@@ -72,14 +74,10 @@ def test_prompt_parameters():
     """Test setting parameters on a prompt."""
     # Create a prompt
     prompt = PromptBuilder().build()
-    
+
     # Set parameters
-    prompt.set_parameters(
-        temperature=0.7,
-        max_tokens=100,
-        top_p=0.9
-    )
-    
+    prompt.set_parameters(temperature=0.7, max_tokens=100, top_p=0.9)
+
     # Check that the parameters were set correctly
     assert prompt.parameters is not None
     assert prompt.parameters.temperature == 0.7
@@ -91,7 +89,7 @@ def test_prompt_function_definition():
     """Test adding a function definition to a prompt."""
     # Create a prompt
     prompt = PromptBuilder().build()
-    
+
     # Add a function definition
     prompt.add_function_definition(
         name="get_weather",
@@ -101,13 +99,13 @@ def test_prompt_function_definition():
             "properties": {
                 "location": {
                     "type": "string",
-                    "description": "The city and state, e.g. San Francisco, CA"
+                    "description": "The city and state, e.g. San Francisco, CA",
                 }
             },
-            "required": ["location"]
-        }
+            "required": ["location"],
+        },
     )
-    
+
     # Check that the function definition was added correctly
     assert prompt.parameters is not None
     assert prompt.parameters.functions is not None
@@ -122,15 +120,15 @@ def test_prompt_without_user_message():
     # Create a prompt with only system message
     builder = PromptBuilder()
     builder.add_system("You are a helpful assistant.")
-    
+
     # This should work now since user message is optional
     prompt = builder.build(require_user_message=False)
-    
+
     # Check that the prompt has only the system message
     assert len(prompt.messages) == 1
     assert prompt.messages[0].role == MessageRole.SYSTEM
     assert prompt.messages[0].content == "You are a helpful assistant."
-    
+
     # But if we require a user message, it should fail
     with pytest.raises(ValueError, match="Prompt must contain at least one user message"):
-        builder.build(require_user_message=True) 
+        builder.build(require_user_message=True)
