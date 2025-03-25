@@ -286,13 +286,22 @@ class ContentPolicyFilter(PromptFilter):
         # Compile each policy as either a keyword filter or regex filter
         for policy_name, patterns in policies.items():
             if isinstance(patterns, list) and all(isinstance(p, str) for p in patterns):
-                # This is a keyword policy
-                self.policies[policy_name] = KeywordFilter(
-                    keywords=patterns,
-                    case_sensitive=False,
-                    check_user_messages_only=check_user_messages_only,
-                    name=f"{policy_name}KeywordFilter"
-                )
+                # Check if patterns look like regular expressions (contain regex special chars)
+                if any(re.search(r'[.*+?^${}()|[\]\\]', p) for p in patterns):
+                    # This is a regex policy
+                    self.policies[policy_name] = RegexFilter(
+                        patterns=patterns,
+                        check_user_messages_only=check_user_messages_only,
+                        name=f"{policy_name}RegexFilter"
+                    )
+                else:
+                    # This is a keyword policy
+                    self.policies[policy_name] = KeywordFilter(
+                        keywords=patterns,
+                        case_sensitive=False,
+                        check_user_messages_only=check_user_messages_only,
+                        name=f"{policy_name}KeywordFilter"
+                    )
             else:
                 # This is a regex policy
                 self.policies[policy_name] = RegexFilter(
