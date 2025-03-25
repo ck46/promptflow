@@ -2,13 +2,12 @@
 Tests for the cache functionality.
 """
 
-import os
 import shutil
 import tempfile
 import time
 from unittest.mock import MagicMock
 
-from promptflow.core.prompt import Prompt, PromptBuilder
+from promptflow.core.prompt import PromptBuilder
 from promptflow.core.response import LLMResponse
 from promptflow.utils import FileCache, InMemoryCache, hash_prompt
 
