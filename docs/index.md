@@ -15,6 +15,7 @@ PromptFlow is designed to simplify the process of creating, managing, versioning
 - **Prompt Auditing & Testing**: Built-in testing framework
 - **Safety and Alignment Checks**: Filter prompts for ethical constraints
 - **Extensible Plugin System**: Support for various LLM providers (OpenAI, Anthropic, Hugging Face)
+- **LangChain Integration**: Compatibility with the LangChain framework
 
 ## Installation
 
@@ -52,6 +53,8 @@ print(response.text)
 
 - [Getting Started](./getting_started.md): Basic introduction to the library
 - [Core Concepts](./core_concepts.md): Understanding the fundamental concepts
+- [LangChain Integration](./langchain_integration.md): Using PromptFlow with LangChain
+- [Testing](./testing.md): Instructions for running and writing tests
 - [API Reference](./api_reference/index.md): Detailed API documentation
 - [Examples](./examples/index.md): Various usage examples
 - [Contributing](./contributing.md): How to contribute to the project 

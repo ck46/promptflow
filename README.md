@@ -13,6 +13,7 @@ A comprehensive prompt management library for Large Language Models with built-i
 - **Strong Schema Validation**: Type-safety with Pydantic
 - **Optional FastAPI Integration**: Expose prompt management via REST API
 - **Native Streamlit UI**: Visual interface for prompt management and testing
+- **LangChain Integration**: Use PromptFlow with LangChain for enhanced prompt management
 
 ## Installation
 
@@ -132,6 +133,29 @@ prompt = flow.select_prompt(
 # See examples/fastapi_integration.py for a complete example
 ```
 
+## LangChain Integration
+
+PromptFlow can be easily integrated with LangChain to combine robust prompt management with LangChain's orchestration capabilities:
+
+```python
+# Convert a PromptFlow prompt to LangChain format
+def promptflow_to_langchain_messages(pf_prompt):
+    lc_messages = []
+    for msg in pf_prompt.messages:
+        if msg.role.value == "system":
+            lc_messages.append(SystemMessage(content=msg.content))
+        elif msg.role.value == "user":
+            lc_messages.append(HumanMessage(content=msg.content))
+    return lc_messages
+
+# Use PromptFlow's versioning with LangChain
+prompt = flow.get_active_prompt("my_prompt")
+lc_messages = promptflow_to_langchain_messages(prompt)
+result = llm.generate([lc_messages])
+```
+
+For detailed examples, see [LangChain Integration](docs/langchain_integration.md).
+
 ## Version Control
 
 ```python
@@ -147,6 +171,13 @@ prompt = flow.get_prompt("my_prompt", version="0.1.0")
 # Set a version as active
 flow.set_active("my_prompt", "0.2.0")
 ```
+
+## Development
+
+For information about setting up the development environment, running tests, and contributing to PromptFlow, see the following resources:
+
+- [Testing Documentation](docs/testing.md): Instructions for running and writing tests
+- [Contributing Guidelines](CONTRIBUTING.md): Guidelines for contributing to the project
 
 ## License
 

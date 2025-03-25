@@ -1,76 +1,78 @@
 # Contributing to PromptFlow
 
-Thank you for your interest in contributing to PromptFlow! This document provides guidelines and instructions for contributing.
+Thank you for your interest in contributing to PromptFlow! This document provides guidelines for contributing to the project.
 
 ## Code of Conduct
 
-By participating in this project, you agree to abide by our code of conduct. Please be respectful and considerate of others.
+Please read and follow our [Code of Conduct](CODE_OF_CONDUCT.md).
 
-## How to Contribute
+## Getting Started
 
-### Reporting Bugs
+1. Fork the repository on GitHub
+2. Clone your fork locally: `git clone https://github.com/ck46/promptflow.git`
+3. Install development dependencies: `poetry install --with dev`
+4. Create a branch for your contribution: `git checkout -b feature/your-feature-name`
 
-If you find a bug, please create an issue on GitHub with the following information:
-- A clear, descriptive title
-- Steps to reproduce the issue
-- Expected behavior and actual behavior
-- Any additional context (screenshots, error messages, etc.)
+## Development Workflow
 
-### Suggesting Features
+1. Make your changes in your feature branch
+2. Add tests for your changes
+3. Run tests to ensure they pass: `poetry run pytest`
+4. Check code style: `poetry run black promptflow tests`
+5. Check imports: `poetry run isort promptflow tests`
+6. Run type checking: `poetry run mypy promptflow`
+7. Commit your changes: `git commit -m "Add your meaningful commit message"`
+8. Push to your fork: `git push origin feature/your-feature-name`
+9. Create a Pull Request from your fork to the main repository
 
-We welcome feature suggestions! Please create an issue on GitHub with:
-- A clear, descriptive title
-- A detailed description of the proposed feature
-- Any relevant examples or use cases
-- Potential implementation details (if applicable)
+## Testing
 
-### Pull Requests
+All contributions must include appropriate tests. Please refer to the [Testing Documentation](docs/testing.md) for details on how to write and run tests for PromptFlow.
 
-1. Fork the repository
-2. Create a new branch (`git checkout -b feature/amazing-feature`)
-3. Make your changes
-4. Run tests (`pytest`)
-5. Commit your changes (`git commit -m 'Add amazing feature'`)
-6. Push to the branch (`git push origin feature/amazing-feature`)
-7. Open a Pull Request
+## Pull Request Process
 
-## Development Setup
-
-1. Clone the repository
-```bash
-git clone https://github.com/yourusername/promptflow.git
-cd promptflow
-```
-
-2. Install dependencies
-```bash
-poetry install
-```
-
-3. Activate the virtual environment
-```bash
-poetry shell
-```
-
-4. Run tests
-```bash
-pytest
-```
+1. Update the README.md and documentation with details of changes to the interface, if applicable
+2. Make sure all tests pass in the CI pipeline
+3. The PR will be merged once it receives approval from maintainers
 
 ## Coding Standards
 
 - Follow PEP 8 style guidelines
-- Write docstrings for all functions, classes, and modules
-- Include type hints where appropriate
-- Write tests for new features and bug fixes
+- Use meaningful variable and function names
+- Write docstrings for all modules, classes, and functions
+- Add type hints to function signatures
+- Keep functions small and focused on a single responsibility
+- Use black and isort for formatting code
 
-## Commit Message Guidelines
+## Documentation
 
-- Use present tense ("Add feature" not "Added feature")
-- Use imperative mood ("Move cursor to..." not "Moves cursor to...")
-- Limit the first line to 72 characters
-- Reference issues and pull requests liberally after the first line
+- Update documentation when changing functionality
+- Use clear and consistent language
+- Include examples when appropriate
+- Documentation is in Markdown format
 
-## License
+## Reporting Bugs
 
-By contributing to PromptFlow, you agree that your contributions will be licensed under the project's MIT License. 
+When reporting bugs, please include:
+
+- A clear and descriptive title
+- A detailed description of the bug
+- Steps to reproduce the behavior
+- Expected behavior
+- Actual behavior
+- Environment information (OS, Python version, etc.)
+
+## Feature Requests
+
+Feature requests are welcome. Please provide:
+
+- A clear and descriptive title
+- A detailed description of the proposed feature
+- Any relevant examples or use cases
+- If possible, a description of how you would implement the feature
+
+## Questions?
+
+If you have any questions about contributing, please open an issue with your question.
+
+Thank you for contributing to PromptFlow! 
