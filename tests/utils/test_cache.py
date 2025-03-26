@@ -7,9 +7,9 @@ import tempfile
 import time
 from unittest.mock import MagicMock
 
-from promptflow.core.prompt import PromptBuilder
-from promptflow.core.response import LLMResponse
-from promptflow.utils import FileCache, InMemoryCache, hash_prompt
+from evoluteprompt.core.prompt import PromptBuilder
+from evoluteprompt.core.response import LLMResponse
+from evoluteprompt.utils import FileCache, InMemoryCache, hash_prompt
 
 
 def test_hash_prompt():

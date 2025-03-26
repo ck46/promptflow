@@ -1,4 +1,4 @@
-# PromptFlow
+# EvolutePrompt
 
 A comprehensive prompt management library for Large Language Models with built-in version control, storage, and activation strategies.
 
@@ -13,29 +13,29 @@ A comprehensive prompt management library for Large Language Models with built-i
 - **Strong Schema Validation**: Type-safety with Pydantic
 - **Optional FastAPI Integration**: Expose prompt management via REST API
 - **Native Streamlit UI**: Visual interface for prompt management and testing
-- **LangChain Integration**: Use PromptFlow with LangChain for enhanced prompt management
+- **LangChain Integration**: Use EvolutePrompt with LangChain for enhanced prompt management
 
 ## Installation
 
 ```bash
 # Basic installation
-pip install promptflow
+pip install EvolutePrompt
 
 # With UI support
-pip install promptflow[ui]
+pip install EvolutePrompt[ui]
 
 # With API and UI support
-pip install promptflow[all]
+pip install EvolutePrompt[all]
 ```
 
 ## Quick Start
 
 ```python
-from promptflow import PromptFlow
-from promptflow import PromptCategory
+from EvolutePrompt import EvolutePrompt
+from EvolutePrompt import PromptCategory
 
-# Initialize PromptFlow
-flow = PromptFlow()
+# Initialize EvolutePrompt
+flow = EvolutePrompt()
 flow.init()
 
 # Create a prompt
@@ -61,14 +61,14 @@ retrieved = flow.get_prompt("capital_question")
 
 ## Using the UI
 
-PromptFlow includes a native Streamlit UI for prompt management and testing. To use it:
+EvolutePrompt includes a native Streamlit UI for prompt management and testing. To use it:
 
 ```bash
 # If installed with pip
-promptflow ui
+EvolutePrompt ui
 
 # Or directly from the module
-python -m promptflow.cli ui
+python -m EvolutePrompt.cli ui
 ```
 
 The UI provides:
@@ -135,11 +135,11 @@ prompt = flow.select_prompt(
 
 ## LangChain Integration
 
-PromptFlow can be easily integrated with LangChain to combine robust prompt management with LangChain's orchestration capabilities:
+EvolutePrompt can be easily integrated with LangChain to combine robust prompt management with LangChain's orchestration capabilities:
 
 ```python
-# Convert a PromptFlow prompt to LangChain format
-def promptflow_to_langchain_messages(pf_prompt):
+# Convert a EvolutePrompt prompt to LangChain format
+def EvolutePrompt_to_langchain_messages(pf_prompt):
     lc_messages = []
     for msg in pf_prompt.messages:
         if msg.role.value == "system":
@@ -148,9 +148,9 @@ def promptflow_to_langchain_messages(pf_prompt):
             lc_messages.append(HumanMessage(content=msg.content))
     return lc_messages
 
-# Use PromptFlow's versioning with LangChain
+# Use EvolutePrompt's versioning with LangChain
 prompt = flow.get_active_prompt("my_prompt")
-lc_messages = promptflow_to_langchain_messages(prompt)
+lc_messages = EvolutePrompt_to_langchain_messages(prompt)
 result = llm.generate([lc_messages])
 ```
 
@@ -174,7 +174,7 @@ flow.set_active("my_prompt", "0.2.0")
 
 ## Development
 
-For information about setting up the development environment, running tests, and contributing to PromptFlow, see the following resources:
+For information about setting up the development environment, running tests, and contributing to EvolutePrompt, see the following resources:
 
 - [Testing Documentation](docs/testing.md): Instructions for running and writing tests
 - [Contributing Guidelines](CONTRIBUTING.md): Guidelines for contributing to the project

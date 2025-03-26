@@ -4,8 +4,8 @@ Tests for the Prompt and PromptBuilder classes.
 
 import pytest
 
-from promptflow.core.prompt import Prompt, PromptBuilder
-from promptflow.core.types import MessageRole
+from evoluteprompt.core.prompt import Prompt, PromptBuilder
+from evoluteprompt.core.types import MessageRole
 
 
 def test_prompt_builder():

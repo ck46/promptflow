@@ -1,6 +1,6 @@
 [tool.poetry]
-name = "promptflow"
-version = "0.1.0"
+name = "EvolutePrompt"
+version = "0.1.1"
 description = "LLM Prompt Manager"
 authors = ["ck46 <prof.chakas@gmail.com>"]
 license = "MIT"

@@ -30,7 +30,9 @@ print(f"Saved prompt version: {version}")
 
 # Create a fallback prompt
 fallback_builder = flow.create_prompt()
-fallback_builder.add_system("You are a helpful assistant. If you don't know the answer, just say so.")
+fallback_builder.add_system(
+    "You are a helpful assistant. If you don't know the answer, just say so."
+)
 fallback_builder.add_user("What is the capital of France?")
 fallback_prompt = fallback_builder.build()
 
@@ -47,7 +49,11 @@ fallback_version = flow.save_prompt("capital_fallback", fallback_prompt)
 print(f"Saved fallback prompt version: {fallback_version}")
 
 # Set the fallback relationship
-flow.set_fallback("capital_fallback", fallback_version, "capital_question")
+flow.set_fallback(
+    "capital_fallback", 
+    fallback_version, 
+    "capital_question"
+)
 
 # Retrieve the prompt
 retrieved_prompt = flow.get_prompt("capital_question")

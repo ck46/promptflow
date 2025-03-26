@@ -1,11 +1,11 @@
 """
-Setup script for PromptFlow.
+Setup script for EvolutePrompt.
 """
 
 from setuptools import setup, find_packages
 
 # Read version from package
-with open("promptflow/__init__.py", "r") as f:
+with open("evoluteprompt/__init__.py", "r") as f:
     for line in f:
         if line.startswith("__version__"):
             version = line.split("=")[1].strip().strip('"\'')
@@ -40,7 +40,7 @@ ui_deps = [
 ]
 
 setup(
-    name="promptflow",
+    name="evoluteprompt",
     version=version,
     description=(
         "A comprehensive prompt management library "
@@ -48,9 +48,9 @@ setup(
     ),
     long_description=long_description,
     long_description_content_type="text/markdown",
-    author="PromptFlow Team",
-    author_email="info@promptflow.com",
-    url="https://github.com/promptflow/promptflow",
+    author="EvolutePrompt Team",
+    author_email="info@evoluteprompt.com",
+    url="https://github.com/ck46/evoluteprompt",
     packages=find_packages(),
     include_package_data=True,
     install_requires=core_deps + db_deps,
@@ -61,7 +61,7 @@ setup(
     },
     entry_points={
         "console_scripts": [
-            "promptflow=promptflow.cli:main",
+            "evoluteprompt=evoluteprompt.cli:main",
         ],
     },
     classifiers=[
@@ -73,6 +73,7 @@ setup(
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
     ],
     python_requires=">=3.8",
 ) 

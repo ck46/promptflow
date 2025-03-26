@@ -74,15 +74,15 @@ async def create_prompt(prompt_req: PromptRequest):
     """Create a new prompt."""
     # Create a prompt builder
     builder = flow.create_prompt()
-    
+
     # Add messages
     if prompt_req.system_message:
         builder.add_system(prompt_req.system_message)
     builder.add_user(prompt_req.user_message)
-    
+
     # Build the prompt
     prompt = builder.build()
-    
+
     # Update metadata
     if prompt_req.metadata:
         # Convert category if present
@@ -91,17 +91,20 @@ async def create_prompt(prompt_req: PromptRequest):
                 category_name = prompt_req.metadata["category"]
                 prompt_req.metadata["category"] = PromptCategory(category_name)
             except ValueError:
-                raise HTTPException(status_code=400, detail=f"Invalid category: {category_name}")
-        
+                raise HTTPException(
+                    status_code=400,
+                    detail=f"Invalid category: {category_name}"
+                )
+
         prompt.update_metadata(**prompt_req.metadata)
-    
+
     # Save the prompt
     version = flow.save_prompt(prompt_req.name, prompt)
-    
+
     # Convert to response model
     messages = [m.dict() for m in prompt.messages]
     metadata = prompt.metadata.dict() if prompt.metadata else {}
-    
+
     return PromptResponse(
         name=prompt_req.name,
         version=version,
@@ -119,31 +122,41 @@ async def list_prompts(category: Optional[str] = None):
         try:
             category_enum = PromptCategory(category)
         except ValueError:
-            raise HTTPException(status_code=400, detail=f"Invalid category: {category}")
-    
+            raise HTTPException(
+                status_code=400,
+                detail=f"Invalid category: {category}"
+            )
+
     # Get the list of prompts
     prompts = flow.list_prompts(category=category_enum)
-    
+
     return ListResponse(prompts=prompts)
 
 
 @app.get("/prompts/{name}", response_model=PromptResponse)
-async def get_prompt(name: str, version: Optional[str] = None, use_active: bool = True):
+async def get_prompt(
+    name: str,
+    version: Optional[str] = None,
+    use_active: bool = True
+):
     """Get a prompt."""
     # Get the prompt
     if use_active:
         prompt = flow.get_active_prompt(name)
     else:
         prompt = flow.get_prompt(name, version)
-    
+
     if not prompt:
-        raise HTTPException(status_code=404, detail=f"Prompt not found: {name}")
-    
+        raise HTTPException(
+            status_code=404,
+            detail=f"Prompt not found: {name}"
+        )
+
     # Convert to response model
     messages = [m.dict() for m in prompt.messages]
     metadata = prompt.metadata.dict() if prompt.metadata else {}
     version = prompt.metadata.version if prompt.metadata else "unknown"
-    
+
     return PromptResponse(
         name=name,
         version=version,
@@ -158,12 +171,18 @@ async def set_active(name: str, version: str):
     # Check if the prompt exists
     prompt = flow.get_prompt(name, version)
     if not prompt:
-        raise HTTPException(status_code=404, detail=f"Prompt not found: {name} version {version}")
-    
+        raise HTTPException(
+            status_code=404,
+            detail=f"Prompt not found: {name} version {version}"
+        )
+
     # Set as active
     flow.set_active(name, version)
-    
-    return {"status": "success", "message": f"Prompt {name} version {version} set as active"}
+
+    return {
+        "status": "success",
+        "message": f"Prompt {name} version {version} set as active"
+    }
 
 
 @app.put("/prompts/{name}/fallback/{version}/{fallback_for}")
@@ -172,19 +191,27 @@ async def set_fallback(name: str, version: str, fallback_for: str):
     # Check if the prompt exists
     prompt = flow.get_prompt(name, version)
     if not prompt:
-        raise HTTPException(status_code=404, detail=f"Prompt not found: {name} version {version}")
-    
+        raise HTTPException(
+            status_code=404,
+            detail=f"Prompt not found: {name} version {version}"
+        )
+
     # Check if the fallback_for prompt exists
     fallback_target = flow.get_prompt(fallback_for)
     if not fallback_target:
-        raise HTTPException(status_code=404, detail=f"Target prompt not found: {fallback_for}")
-    
+        raise HTTPException(
+            status_code=404,
+            detail=f"Target prompt not found: {fallback_for}"
+        )
+
     # Set as fallback
     flow.set_fallback(name, version, fallback_for)
-    
+
     return {
-        "status": "success", 
-        "message": f"Prompt {name} version {version} set as fallback for {fallback_for}"
+        "status": "success",
+        "message": (
+            f"Prompt {name} version {version} set as fallback for {fallback_for}"
+        )
     }
 
 
@@ -194,8 +221,11 @@ async def list_versions(name: str):
     # Check if the prompt exists
     versions = flow.list_versions(name)
     if not versions:
-        raise HTTPException(status_code=404, detail=f"Prompt not found: {name}")
-    
+        raise HTTPException(
+            status_code=404,
+            detail=f"Prompt not found: {name}"
+        )
+
     return versions
 
 

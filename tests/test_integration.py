@@ -4,12 +4,12 @@ Integration tests for the PromptFlow library.
 
 from unittest.mock import MagicMock
 
-from promptflow import PromptBuilder
-from promptflow.core.response import LLMResponse
-from promptflow.core.types import PromptStats
-from promptflow.integrations import OpenAIProvider
-from promptflow.prompt_filters import FilterPipeline, KeywordFilter, MaxTokenFilter
-from promptflow.utils import InMemoryCache
+from evoluteprompt import PromptBuilder
+from evoluteprompt.core.response import LLMResponse
+from evoluteprompt.core.types import PromptStats
+from evoluteprompt.integrations import OpenAIProvider
+from evoluteprompt.prompt_filters import FilterPipeline, KeywordFilter, MaxTokenFilter
+from evoluteprompt.utils import InMemoryCache
 
 
 class TestIntegration:

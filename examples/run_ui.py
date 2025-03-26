@@ -12,7 +12,10 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 try:
     import streamlit
 except ImportError:
-    print("Streamlit is not installed. Please install it with 'pip install streamlit'.")
+    print(
+        "Streamlit is not installed. "
+        "Please install it with 'pip install streamlit'."
+    )
     sys.exit(1)
 
 from promptflow.ui import run_streamlit_app

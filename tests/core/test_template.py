@@ -7,8 +7,8 @@ import tempfile
 
 import pytest
 
-from promptflow.core.template import MultiMessageTemplate, PromptTemplate
-from promptflow.core.types import MessageRole
+from evoluteprompt.core.template import MultiMessageTemplate, PromptTemplate
+from evoluteprompt.core.types import MessageRole
 
 
 def test_prompt_template_render():

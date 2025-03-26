@@ -2,8 +2,8 @@
 Tests for prompt filters.
 """
 
-from promptflow.core.prompt import PromptBuilder
-from promptflow.prompt_filters import (
+from evoluteprompt.core.prompt import PromptBuilder
+from evoluteprompt.prompt_filters import (
     ContentPolicyFilter,
     FilterPipeline,
     KeywordFilter,
