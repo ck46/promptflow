@@ -35,9 +35,9 @@ jobs:
           virtualenvs-in-project: true
 
       # Install project dependencies including development dependencies
-      # - name: Install dependencies
-      #   run: |
-      #     poetry install --with dev
+      - name: Install dependencies
+        run: |
+          poetry install --with dev
 
       # Run code style checks
       # - name: Lint with flake8
