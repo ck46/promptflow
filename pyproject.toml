@@ -20,6 +20,7 @@ pytest = "^8.3.5"
 tiktoken = "^0.9.0"
 aiohttp = "^3.9.3"
 better-profanity = "^0.7.0"
+autopep8 = "^2.3.2"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.5"

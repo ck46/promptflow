@@ -42,7 +42,10 @@ ui_deps = [
 setup(
     name="promptflow",
     version=version,
-    description="A comprehensive prompt management library for Large Language Models",
+    description=(
+        "A comprehensive prompt management library "
+        "for Large Language Models"
+    ),
     long_description=long_description,
     long_description_content_type="text/markdown",
     author="PromptFlow Team",
