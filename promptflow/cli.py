@@ -2,40 +2,43 @@
 Command-line interface for PromptFlow.
 """
 
-import os
-import sys
 import argparse
-import subprocess
-from pathlib import Path
+import sys
+from typing import List, Optional
+
+from promptflow.ui import create_app
 
 
-def run_ui():
-    """Run the Streamlit UI."""
-    # Get the path to the streamlit_app.py file
-    app_path = Path(__file__).parent / "ui" / "streamlit_app.py"
-    
-    # Run streamlit
-    cmd = [sys.executable, "-m", "streamlit", "run", str(app_path), "--server.headless", "true"]
-    subprocess.run(cmd)
+def parse_args(args: Optional[List[str]] = None) -> argparse.Namespace:
+    """Parse command line arguments.
 
+    Args:
+        args: List of arguments to parse. If None, uses sys.argv[1:].
 
-def main():
-    """Main CLI entry point."""
+    Returns:
+        Parsed arguments.
+    """
     parser = argparse.ArgumentParser(description="PromptFlow CLI")
     subparsers = parser.add_subparsers(dest="command", help="Command to run")
-    
+
     # UI command
-    ui_parser = subparsers.add_parser("ui", help="Run the PromptFlow UI")
-    
-    # Parse arguments
-    args = parser.parse_args()
-    
-    # Run the appropriate command
-    if args.command == "ui":
-        run_ui()
-    else:
-        parser.print_help()
+    subparsers.add_parser("ui", help="Start the web UI for managing prompts")
+
+    return parser.parse_args(args)
+
+
+def main(args: Optional[List[str]] = None) -> None:
+    """Main entry point for the CLI.
+
+    Args:
+        args: List of arguments to parse. If None, uses sys.argv[1:].
+    """
+    parsed_args = parse_args(args)
+
+    if parsed_args.command == "ui":
+        app = create_app()
+        app.run()
 
 
 if __name__ == "__main__":
-    main() 
+    main()

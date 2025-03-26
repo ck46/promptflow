@@ -2,14 +2,16 @@
 Response classes for LLM providers.
 """
 
-from typing import Dict, List, Optional, Any, Union
-from pydantic import BaseModel, Field
+from typing import Any, Dict, List, Optional
+
+from pydantic import BaseModel
 
 from promptflow.core.types import Message, PromptStats
 
 
 class FunctionCall(BaseModel):
     """A function call made by the model."""
+
     name: str
     arguments: Dict[str, Any]
 
@@ -18,6 +20,7 @@ class LLMResponse(BaseModel):
     """
     A response from an LLM provider.
     """
+
     text: str
     model: Optional[str] = None
     provider: Optional[str] = None
@@ -26,67 +29,84 @@ class LLMResponse(BaseModel):
     function_call: Optional[FunctionCall] = None
     chunks: Optional[List[str]] = None
     raw_response: Optional[Dict[str, Any]] = None
-    
+
     def get_message(self) -> Message:
         """
         Get the response as a message.
-        
+
         Returns:
             A Message object with the response.
         """
         from promptflow.core.types import MessageRole
-        
-        return Message(
-            role=MessageRole.ASSISTANT,
-            content=self.text
-        )
-    
+
+        return Message(role=MessageRole.ASSISTANT, content=self.text)
+
     def update_stats(self, **kwargs) -> "LLMResponse":
         """
         Update the stats for the response.
-        
+
         Args:
             **kwargs: The stats to update.
-            
+
         Returns:
             The updated response.
         """
         if self.stats is None:
             self.stats = PromptStats()
-            
+
         for key, value in kwargs.items():
             if hasattr(self.stats, key):
                 setattr(self.stats, key, value)
-                
+
         return self
+
+    def __str__(self) -> str:
+        """Return the response text.
+
+        Returns:
+            The response text.
+        """
+        return self.text
+
+    def __repr__(self) -> str:
+        """Return a string representation of the response.
+
+        Returns:
+            A string representation of the response.
+        """
+        return f"LLMResponse(text='{self.text}')"
 
 
 class StreamingResponse:
     """
     A streaming response from an LLM provider.
     """
-    def __init__(self, model: Optional[str] = None, provider: Optional[str] = None):
+
+    def __init__(
+            self,
+            model: Optional[str] = None,
+            provider: Optional[str] = None):
         self.text = ""
         self.chunks: List[str] = []
         self.model = model
         self.provider = provider
         self.stats = PromptStats()
         self.done = False
-        
+
     def add_chunk(self, chunk: str) -> None:
         """
         Add a chunk to the response.
-        
+
         Args:
             chunk: The chunk to add.
         """
         self.chunks.append(chunk)
         self.text += chunk
-        
+
     def to_response(self) -> LLMResponse:
         """
         Convert the streaming response to a regular response.
-        
+
         Returns:
             An LLMResponse object.
         """
@@ -95,5 +115,5 @@ class StreamingResponse:
             model=self.model,
             provider=self.provider,
             stats=self.stats,
-            chunks=self.chunks
-        ) 
+            chunks=self.chunks,
+        )

@@ -8,11 +8,7 @@ from promptflow import PromptBuilder
 from promptflow.core.response import LLMResponse
 from promptflow.core.types import PromptStats
 from promptflow.integrations import OpenAIProvider
-from promptflow.prompt_filters import (
-    FilterPipeline,
-    KeywordFilter,
-    MaxTokenFilter,
-)
+from promptflow.prompt_filters import FilterPipeline, KeywordFilter, MaxTokenFilter
 from promptflow.utils import InMemoryCache
 
 
@@ -21,34 +17,25 @@ class TestIntegration:
 
     def test_provider_with_filters_and_cache(self):
         """Test using a provider with filters and cache."""
-        # Create a mock provider
-        provider = MagicMock(spec=OpenAIProvider)
+        # Create a mock provider with complete method
+        provider = MagicMock()
+        provider.complete = MagicMock()
 
         # Mock the complete method to return a fixed response
         mock_response = LLMResponse(
             text="The capital of France is Paris.",
             stats=PromptStats(
-                prompt_tokens=20,
-                completion_tokens=10,
-                total_tokens=30,
-                latency_ms=500
+                prompt_tokens=20, completion_tokens=10, total_tokens=30, latency_ms=500
             ),
             provider="mock",
             model="mock-model",
-            raw_response={
-                "choices": [{
-                    "message": {
-                        "content": "The capital of France is Paris."
-                    }
-                }]
-            },
+            raw_response={"choices": [{"message": {"content": "The capital of France is Paris."}}]},
         )
         provider.complete.return_value = mock_response
 
         # Create a filter pipeline
         keyword_filter = KeywordFilter(
-            keywords=["hack", "illegal", "bomb"],
-            name="HarmfulContentFilter"
+            keywords=["hack", "illegal", "bomb"], name="HarmfulContentFilter"
         )
 
         token_filter = MaxTokenFilter(max_tokens=1000, name="TokenLimitFilter")
@@ -93,6 +80,4 @@ class TestIntegration:
         # Check filters
         filter_result = pipeline.check(prompt2)
         assert filter_result.passed is False
-        assert (
-            filter_result.details["failed_filter"] == "HarmfulContentFilter"
-        )
+        assert filter_result.details["failed_filter"] == "HarmfulContentFilter"

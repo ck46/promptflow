@@ -134,9 +134,7 @@ def test_file_cache():
 
         # Create a proper LLMResponse object instead of a mock
         response = LLMResponse(
-            text="The capital of France is Paris.",
-            model="test-model",
-            provider="test-provider"
+            text="The capital of France is Paris.", model="test-model", provider="test-provider"
         )
 
         # Cache the response

@@ -97,9 +97,7 @@ def test_prompt_function_definition():
             "properties": {
                 "location": {
                     "type": "string",
-                    "description": (
-                        "The city and state, e.g. San Francisco, CA"
-                    ),
+                    "description": ("The city and state, e.g. San Francisco, CA"),
                 }
             },
             "required": ["location"],
@@ -111,14 +109,8 @@ def test_prompt_function_definition():
     assert prompt.parameters.functions is not None
     assert len(prompt.parameters.functions) == 1
     assert prompt.parameters.functions[0].name == "get_weather"
-    assert (
-        prompt.parameters.functions[0].description ==
-        "Get the weather for a location"
-    )
-    assert (
-        "location" in
-        prompt.parameters.functions[0].parameters["properties"]
-    )
+    assert prompt.parameters.functions[0].description == "Get the weather for a location"
+    assert "location" in prompt.parameters.functions[0].parameters["properties"]
 
 
 def test_prompt_without_user_message():
@@ -136,8 +128,5 @@ def test_prompt_without_user_message():
     assert prompt.messages[0].content == "You are a helpful assistant."
 
     # But if we require a user message, it should fail
-    with pytest.raises(
-        ValueError,
-        match="Prompt must contain at least one user message"
-    ):
+    with pytest.raises(ValueError, match="Prompt must contain at least one user message"):
         builder.build(require_user_message=True)

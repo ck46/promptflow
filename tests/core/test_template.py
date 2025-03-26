@@ -25,11 +25,7 @@ Keep your answer {{ style }}.
     )
 
     # Render the template
-    rendered = template.render(
-        role="technical",
-        question="What is Python?",
-        style="concise"
-    )
+    rendered = template.render(role="technical", question="What is Python?", style="concise")
 
     # Check that variables were properly substituted
     assert "technical assistant" in rendered
@@ -77,10 +73,7 @@ def test_multi_message_template():
     # Create a template
     template = MultiMessageTemplate(
         system_template="You are a {{ role }} assistant.",
-        user_templates=[
-            "What is {{ topic }}?",
-            "Why is {{ topic }} important?"
-        ],
+        user_templates=["What is {{ topic }}?", "Why is {{ topic }} important?"],
         assistant_templates=["{{ topic }} is a programming language."],
         variables={"role": "helpful", "topic": "Python"},
     )
@@ -149,28 +142,16 @@ Why is {{ topic }} important?
 def test_prompt_template_without_user_message():
     """Test converting a template to a prompt without a user message."""
     # Create a template
-    template = PromptTemplate.from_string(
-        "You should respond in a friendly tone."
-    )
+    template = PromptTemplate.from_string("You should respond in a friendly tone.")
 
     # Convert the template to a system prompt without requiring a user message
-    prompt = template.to_prompt(
-        role=MessageRole.SYSTEM,
-        require_user_message=False
-    )
+    prompt = template.to_prompt(role=MessageRole.SYSTEM, require_user_message=False)
 
     # Check that the prompt was created correctly with only a system message
     assert len(prompt.messages) == 1
     assert prompt.messages[0].role == MessageRole.SYSTEM
-    assert (
-        prompt.messages[0].content ==
-        "You should respond in a friendly tone."
-    )
+    assert prompt.messages[0].content == "You should respond in a friendly tone."
 
     # Using the default require_user_message=True with a SYSTEM message fails
-    with pytest.raises(
-        ValueError,
-        match="Prompt must contain at least "
-              "one user message"
-    ):
+    with pytest.raises(ValueError, match="Prompt must contain at least " "one user message"):
         template.to_prompt(role=MessageRole.SYSTEM)

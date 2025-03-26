@@ -1,14 +1,14 @@
-"""
-Common types used throughout the PromptFlow library.
-"""
+"""Core types for PromptFlow."""
 
 from enum import Enum
-from typing import Dict, List, Optional, Any, Union
+from typing import Any, Dict, List, Optional, Union
+
 from pydantic import BaseModel, Field
 
 
 class MessageRole(str, Enum):
-    """Roles for messages in a conversation."""
+    """Role of a message in a conversation."""
+
     SYSTEM = "system"
     USER = "user"
     ASSISTANT = "assistant"
@@ -17,6 +17,7 @@ class MessageRole(str, Enum):
 
 class Message(BaseModel):
     """A message in a conversation."""
+
     role: MessageRole
     content: str
     name: Optional[str] = None
@@ -24,6 +25,7 @@ class Message(BaseModel):
 
 class FunctionDefinition(BaseModel):
     """Definition of a function that can be called by the model."""
+
     name: str
     description: Optional[str] = None
     parameters: Dict[str, Any] = Field(default_factory=dict)
@@ -31,6 +33,7 @@ class FunctionDefinition(BaseModel):
 
 class PromptCategory(str, Enum):
     """Categories for prompts."""
+
     CHAT = "chat"
     SEARCH = "search"
     SUMMARIZATION = "summarization"
@@ -43,6 +46,7 @@ class PromptCategory(str, Enum):
 
 class PromptMetadata(BaseModel):
     """Metadata for a prompt."""
+
     version: str
     description: Optional[str] = None
     tags: List[str] = Field(default_factory=list)
@@ -58,6 +62,7 @@ class PromptMetadata(BaseModel):
 
 class PromptStats(BaseModel):
     """Statistics for a prompt."""
+
     token_count: Optional[int] = None
     character_count: Optional[int] = None
     completion_tokens: Optional[int] = None
@@ -67,10 +72,11 @@ class PromptStats(BaseModel):
     success_count: int = 0
     failure_count: int = 0
     last_used: Optional[str] = None
-    
-    
+
+
 class PromptParameters(BaseModel):
     """Parameters for a prompt."""
+
     temperature: Optional[float] = None
     max_tokens: Optional[int] = None
     top_p: Optional[float] = None
@@ -79,4 +85,4 @@ class PromptParameters(BaseModel):
     stop: Optional[Union[str, List[str]]] = None
     functions: Optional[List[FunctionDefinition]] = None
     function_call: Optional[Union[str, Dict[str, str]]] = None
-    model: Optional[str] = None 
+    model: Optional[str] = None
