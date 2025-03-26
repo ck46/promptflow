@@ -1,39 +1,39 @@
-# PromptFlow Documentation
+# EvolutePrompt Documentation
 
-Welcome to the documentation for PromptFlow, a comprehensive prompt management library for Large Language Models (LLMs).
+Welcome to the documentation for EvolutePrompt, a comprehensive prompt management library for Large Language Models (LLMs).
 
 ## Overview
 
-PromptFlow is designed to simplify the process of creating, managing, versioning, and deploying prompts for LLMs. It provides a set of tools and abstractions to make working with prompts more systematic and efficient.
+EvolutePrompt is designed to simplify the process of creating, managing, versioning, and deploying prompts for LLMs. It provides a set of tools and abstractions to make working with prompts more systematic and efficient.
 
 ## Key Features
 
-- **Prompt Version Control**: Track changes to prompts over time
-- **Experimentation & Analytics**: Compare prompt performance with metrics
-- **Prompt Templates and Variables**: Reuse and parameterize prompts
-- **Caching**: Optional response caching for efficiency
-- **Prompt Auditing & Testing**: Built-in testing framework
-- **Safety and Alignment Checks**: Filter prompts for ethical constraints
-- **Extensible Plugin System**: Support for various LLM providers (OpenAI, Anthropic, Hugging Face)
-- **LangChain Integration**: Compatibility with the LangChain framework
+- **Prompt Version Control**: Track changes to prompts over time ([examples](./examples/version_control.md))
+- **Experimentation & Analytics**: Compare prompt performance with metrics ([examples](./examples/experimentation.md))
+- **Prompt Templates and Variables**: Reuse and parameterize prompts ([examples](./examples/templates.md))
+- **Caching**: Optional response caching for efficiency ([examples](./examples/caching.md))
+- **Prompt Auditing & Testing**: Built-in testing framework ([examples](./examples/testing.md))
+- **Safety and Alignment Checks**: Filter prompts for ethical constraints ([examples](./examples/safety.md))
+- **Extensible Plugin System**: Support for various LLM providers (OpenAI, Anthropic, Hugging Face) ([examples](./examples/plugins.md))
+- **LangChain Integration**: Compatibility with the LangChain framework ([examples](./examples/langchain.md))
 
 ## Installation
 
 ```bash
-pip install promptflow
+pip install evoluteprompt
 ```
 
 Or with Poetry:
 
 ```bash
-poetry add promptflow
+poetry add evoluteprompt
 ```
 
 ## Quick Start
 
 ```python
-from promptflow import PromptBuilder, LLMProvider
-from promptflow.integrations import OpenAIProvider
+from evoluteprompt import PromptBuilder, LLMProvider
+from evoluteprompt.integrations import OpenAIProvider
 
 # Create a provider
 provider = OpenAIProvider(api_key="YOUR_API_KEY")
@@ -53,8 +53,14 @@ print(response.text)
 
 - [Getting Started](./getting_started.md): Basic introduction to the library
 - [Core Concepts](./core_concepts.md): Understanding the fundamental concepts
-- [LangChain Integration](./langchain_integration.md): Using PromptFlow with LangChain
-- [Testing](./testing.md): Instructions for running and writing tests
+- [Examples](./examples/): Detailed examples of all features
+  - [Version Control](./examples/version_control.md)
+  - [Experimentation & Analytics](./examples/experimentation.md)
+  - [Templates & Variables](./examples/templates.md)
+  - [Caching](./examples/caching.md)
+  - [Testing](./examples/testing.md)
+  - [Safety & Alignment](./examples/safety.md)
+  - [Plugin System](./examples/plugins.md)
+  - [LangChain Integration](./examples/langchain.md)
 - [API Reference](./api_reference/index.md): Detailed API documentation
-- [Examples](./examples/index.md): Various usage examples
 - [Contributing](./contributing.md): How to contribute to the project 

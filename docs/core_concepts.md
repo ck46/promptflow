@@ -1,10 +1,10 @@
 # Core Concepts
 
-This document explains the core concepts and components of the PromptFlow library.
+This document explains the core concepts and components of the EvolutePrompt library.
 
 ## Prompts
 
-In PromptFlow, a prompt is a structured collection of messages that are sent to a language model. A prompt consists of one or more messages, each with a role (system, user, assistant, or function) and content.
+In EvolutePrompt, a prompt is a structured collection of messages that are sent to a language model. A prompt consists of one or more messages, each with a role (system, user, assistant, or function) and content.
 
 ### Message Roles
 
@@ -18,7 +18,7 @@ In PromptFlow, a prompt is a structured collection of messages that are sent to 
 The PromptBuilder provides a fluent API for constructing prompts:
 
 ```python
-from promptflow import PromptBuilder
+from evoluteprompt import PromptBuilder
 
 prompt = PromptBuilder()\
     .add_system("You are a helpful assistant.")\
@@ -28,10 +28,10 @@ prompt = PromptBuilder()\
 
 ## Templates
 
-Templates allow you to parameterize prompts with variables. PromptFlow uses Jinja2 for templating.
+Templates allow you to parameterize prompts with variables. EvolutePrompt uses Jinja2 for templating.
 
 ```python
-from promptflow import PromptTemplate
+from evoluteprompt import PromptTemplate
 
 template = PromptTemplate("""
 You are a {{ role }} assistant. Please answer the following question:
@@ -50,10 +50,10 @@ prompt = template.to_prompt(
 
 ## Providers
 
-Providers are abstraction layers for different LLM APIs. They handle the communication with the API and convert between PromptFlow's internal representation and the API's format.
+Providers are abstraction layers for different LLM APIs. They handle the communication with the API and convert between EvolutePrompt's internal representation and the API's format.
 
 ```python
-from promptflow.integrations import OpenAIProvider
+from evoluteprompt.integrations import OpenAIProvider
 
 provider = OpenAIProvider(
     api_key="YOUR_API_KEY",
@@ -84,7 +84,7 @@ print(response.stats.total_tokens)  # Token usage
 The PromptRepo system provides version control for prompts:
 
 ```python
-from promptflow import PromptRepo
+from evoluteprompt import PromptRepo
 
 repo = PromptRepo("./prompts")
 
@@ -105,7 +105,7 @@ diff = repo.compare_versions("greeting", "0.1.0", "0.2.0")
 Filters provide safety and alignment checks for prompts:
 
 ```python
-from promptflow.prompt_filters import KeywordFilter, RegexFilter, FilterPipeline
+from evoluteprompt.prompt_filters import KeywordFilter, RegexFilter, FilterPipeline
 
 # Create filters
 keyword_filter = KeywordFilter(
@@ -133,10 +133,10 @@ else:
 
 ## Caching
 
-PromptFlow includes caching to avoid redundant API calls:
+EvolutePrompt includes caching to avoid redundant API calls:
 
 ```python
-from promptflow.utils import InMemoryCache, FileCache
+from evoluteprompt.utils import InMemoryCache, FileCache
 
 # Create a cache
 cache = InMemoryCache()  # Or: cache = FileCache("./cache")

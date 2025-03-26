@@ -1,29 +1,29 @@
 # Getting Started
 
-This guide will help you get started with PromptFlow, explaining the basic usage and concepts.
+This guide will help you get started with EvolutePrompt, explaining the basic usage and concepts.
 
 ## Installation
 
-You can install PromptFlow via pip:
+You can install EvolutePrompt via pip:
 
 ```bash
-pip install promptflow
+pip install evoluteprompt
 ```
 
 Or with Poetry:
 
 ```bash
-poetry add promptflow
+poetry add evoluteprompt
 ```
 
 ## Basic Usage
 
 ### Setting up a Provider
 
-First, you need to set up a provider for the LLM you want to use. PromptFlow currently supports OpenAI, Anthropic, and Hugging Face.
+First, you need to set up a provider for the LLM you want to use. EvolutePrompt currently supports OpenAI, Anthropic, and Hugging Face.
 
 ```python
-from promptflow.integrations import OpenAIProvider
+from evoluteprompt.integrations import OpenAIProvider
 
 # Create a provider
 provider = OpenAIProvider(
@@ -37,7 +37,7 @@ provider = OpenAIProvider(
 You can create a prompt using the PromptBuilder:
 
 ```python
-from promptflow import PromptBuilder
+from evoluteprompt import PromptBuilder
 
 # Create a prompt
 prompt = PromptBuilder()\
@@ -76,7 +76,7 @@ provider.stream(prompt, callback=process_chunk)
 Templates allow you to reuse prompts with different variables:
 
 ```python
-from promptflow import PromptTemplate
+from evoluteprompt import PromptTemplate
 
 # Create a template
 template = PromptTemplate("""
@@ -100,10 +100,10 @@ response = provider.complete(prompt)
 
 ## Version Control
 
-PromptFlow includes a version control system for prompts:
+EvolutePrompt includes a version control system for prompts:
 
 ```python
-from promptflow import PromptRepo
+from evoluteprompt import PromptRepo
 
 # Create a repository
 repo = PromptRepo("./prompts")
@@ -122,6 +122,6 @@ prompt = repo.get_prompt("greeting", version="0.1.0")
 
 ## Next Steps
 
-- Check out the [Core Concepts](./core_concepts.md) to understand the fundamental concepts in PromptFlow.
+- Check out the [Core Concepts](./core_concepts.md) to understand the fundamental concepts in EvolutePrompt.
 - Explore the [Examples](./examples/index.md) to see more complex usage scenarios.
 - Read the [API Reference](./api_reference/index.md) for detailed information about the API. 
